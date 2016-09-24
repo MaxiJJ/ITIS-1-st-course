@@ -4,7 +4,7 @@ class ToNSystem6 {
 
 		int input = Integer.parseInt(args[0]);
 		int k = Integer.parseInt(args[1]);
-		int countOfOne = 0;
+		int sumOfNum = 0;
 		double result = 0;
 		double result2 = 0;
 		int oneNum;
@@ -16,7 +16,7 @@ class ToNSystem6 {
 
 				oneNum = input % k;
 
-				if (oneNum > 0) countOfOne += oneNum;
+				if (oneNum > 0) sumOfNum += oneNum;
 
 				result += oneNum * Math.pow(10.0 , (countOfIteration));
 				countOfIteration++;
@@ -26,13 +26,13 @@ class ToNSystem6 {
 
 			countOfIteration = 0;
 
-			while (countOfOne != 0) {
+			while (sumOfNum != 0) {
 
-				oneNum = countOfOne % k;
+				oneNum = sumOfNum % k;
 
 				result2 += oneNum * Math.pow(10.0 , (countOfIteration));
 				countOfIteration++;
-				countOfOne /= k;
+				sumOfNum /= k;
 
 			}
 

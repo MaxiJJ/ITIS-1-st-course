@@ -2,99 +2,91 @@ class GreatestCommonDivisor11 {
 
 	public static void main(String[] args) {
 
-		int firstNum = Integer.parseInt(args[0]);
-		int secondNum = Integer.parseInt(args[1]);
+        int firstNum = Integer.parseInt(args[0]);
+        int secondNum = Integer.parseInt(args[1]);
 
-		long evklidTime = evklidMethod(firstNum, secondNum);
-		long bfTime = bruteForce(firstNum, secondNum);
+        if (firstNum < 0 || secondNum < 0) {
 
-		if (evklidTime < bfTime) {
+            System.out.print("Number must be greater than 0");
 
-			System.out.print("Evklid method is faster");
+        } else {
 
-		} else if (evklidTime == bfTime) {
+            long evklidTime = evklidMethod(firstNum, secondNum);
+            long bfTime = bruteForce(firstNum, secondNum);
 
-			System.out.print("Both method have same time");
+            if (evklidTime < bfTime) {
 
-		} else {
+                System.out.print("Evklid method is faster");
 
-			System.out.print("Bruteforce is faster");
+            } else if (evklidTime == bfTime) {
 
-		}
+                System.out.print("Both method have same time");
+
+            } else {
+
+                System.out.print("Bruteforce is faster");
+
+            }
+
+        }
+
+    }
+
+    public static long evklidMethod(int firstNum, int secondNum) {
+
+        long start = System.currentTimeMillis();
 
 
-	}
+        while (firstNum != 0 && secondNum != 0) {
 
-	public static long evklidMethod(int firstNum, int secondNum) {
+            if ( firstNum > secondNum) {
 
-		long start = System.currentTimeMillis();
+                firstNum -= secondNum; //firstNum %= secondNum;
 
-		if (firstNum < 0 || secondNum < 0) {
+            } else {
 
-			System.out.print("Number must be greater than 0");
+                secondNum -= firstNum; //secondNum %= firstNum;
 
-		} else {
+            }
 
-			while (firstNum != 0 && secondNum != 0) {
+        }
 
-				if ( firstNum > secondNum) {
+        System.out.printf("Greatest Common Divisor is %d \n", firstNum + secondNum );
 
-					firstNum %= secondNum;
+        long finish = System.currentTimeMillis();
+        long time = finish - start;
 
-				} else {
+        return time;
 
-					secondNum %= firstNum;
+    }
 
-				}
+    
+    
 
-			}
+    public static long bruteForce(int firstNum, int secondNum) {
 
-			//System.out.printf("Greatest Common Divisor is %d",firstNum+secondNum);
+        long start = System.currentTimeMillis();
 
-		}
+        int gcd = 0;
+        int min = Math.min(firstNum,secondNum);
 
-		
+        for (int i = 1; i <= min; i++) {
 
-		long finish = System.currentTimeMillis();
-		long time = finish - start;
+            if (firstNum % i == 0 && secondNum % i == 0 && i > gcd) {
 
-		return time;
+                gcd = i;
 
-	}
+            }
 
-	public static long bruteForce(int firstNum, int secondNum) {
+        }
 
-		long start = System.currentTimeMillis();
+        //System.out.printf("Greatest Common Divisor is %d",gcd);
 
-		if (firstNum < 0 || secondNum < 0) {
+        long finish = System.currentTimeMillis();
+        long time = finish - start;
 
-			System.out.print("Number must be greater than 0");
+        return time;
 
-		} else {
- 
-			int gcd = 0;
-			int min = Math.min(firstNum,secondNum);
-
-			for (int i = 1; i <= min; i++) {
-
-				if (firstNum % i == 0 && secondNum % i == 0 && i > gcd) {
-
-					gcd = i;
-
-				}
-
-			}
-
-			//System.out.printf("Greatest Common Divisor is %d",gcd);
-
-		}
-
-		long finish = System.currentTimeMillis();
-		long time = finish - start;
-
-		return time;
-
-	}
+    }
 
 }
-

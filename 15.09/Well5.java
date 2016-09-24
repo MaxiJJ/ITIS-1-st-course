@@ -6,7 +6,7 @@ public class Well5 {
 
 		if ( time > 0) {
 
-			System.out.print("Depth of fountain is " + (9.8*time*time)/2);
+			System.out.print("Depth of well is " + (9.8 * time * time) / 2);
 
 		} else {
 
