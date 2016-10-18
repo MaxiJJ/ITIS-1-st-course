@@ -2,7 +2,7 @@ class Ex2PascalTriangle {
 
     public static void main(String[] args) {
 
-        int num = 10;
+        int num = args[0];
         int Cnk;
 
         for (int n = 0; n <= 10; n++) {
