@@ -31,7 +31,7 @@ public class MyString {
 
     /**
      * Initializes a newly created object so that it represents the characters
-     * sequence of {@code String} argument.
+     * sequence of String argument.
      *
      * @param line
      * The initial value of the {@link java.lang.String String}.
@@ -43,8 +43,7 @@ public class MyString {
     /**
      * Initializes a newly created object so that it represents
      * the same sequence of characters as the argument.
-     * @param line
-     * A {@code MyString}
+     * @param line A MyString
      */
     MyString(MyString line) {
         charSequence = line.toCharArray();
@@ -53,8 +52,8 @@ public class MyString {
     /**
      * Concatenates the specified string to the end of this string.
      *
-     * @param str the {@code MyString} that is concatenated to the end
-     *                of this {@code MyString}.
+     * @param str the MyString that is concatenated to the end
+     *                of this MyString.
      * @return a string that represents the concatenation of this object's
      *          characters followed by the string argument's characters.
      */
@@ -208,7 +207,6 @@ public class MyString {
     public int hashCode() {
         return Arrays.hashCode(charSequence);
     }
-
-    //Run from .java file directory
-    // javadoc -private -use -author -version -d C:\Users\Максим\IdeaProjects\doc MyString.java
 }
+//Run from .java file directory
+// javadoc -private -use -author -version -d C:\Users\Максим\IdeaProjects\doc MyString.java
