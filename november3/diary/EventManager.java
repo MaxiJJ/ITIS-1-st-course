@@ -1,57 +1,94 @@
-import java.text.*;
-import java.util.*;
+package november3.diary;
 
-class EventManager {
+import november3.diary.utils.CsvFileReader;
+import november3.diary.utils.CsvFileWriter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Scanner;
+
+public class EventManager {
     private final static String SWITCH_MENU = "_______________________________________________\n\n";
-    private Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
-    void start() {
-        System.out.println("-----------------------------------------");
-        System.out.println("|             EVENT MANAGER             |");
-        System.out.println("-----------------------------------------");
+    public void start() {
+        printHelloMessage();
+        performStartMenu();
+    }
 
+    private void printHelloMessage() {
+        System.out.println("●▬▬▬▬▬▬▬▬▬▬๑۩۩๑▬▬▬▬▬▬▬▬▬▬●\n" +
+                "▌             EVENT MANAGER             ▌\n" +
+                "●▬▬▬▬▬▬▬▬▬▬▬๑▬▬▬▬▬▬▬▬▬▬▬●\n");
+    }
+
+    private void performStartMenu() {
         String option;
         do {
-            System.out.println("Choose one of the following options:\n");
-            System.out.println("1. EVENT TABLE");
-            System.out.println("2. ADD EVENT");
-            System.out.println("3. EDIT EVENT");
-            System.out.println("4. EXIT APP");
+            System.out.println("Choose one of the following options:\n" +
+                    "1. EVENT TABLE\n" +
+                    "2. ADD EVENT\n" +
+                    "3. EDIT EVENT\n" +
+                    "4. SAVE EVENTS TO FILE\n" +
+                    "5. READ EVENTS FROM FILE\n" +
+                    "6. EXIT APP\n");
 
             option = sc.nextLine().toUpperCase();
             if (option.isEmpty()) option = sc.nextLine().toUpperCase();
 
+            System.out.println(SWITCH_MENU);
             switch (option) {
                 case "1":
                 case "EVENT TABLE":
                 case "EVENT":
                 case "ET": {
-                    System.out.println(SWITCH_MENU);
                     showEvents();
                     break;
                 }
 
                 case "2":
-                case "ADD":
                 case "ADD EVENT":
+                case "ADD":
                 case "AE": {
-                    System.out.println(SWITCH_MENU);
                     addEvent();
                     break;
                 }
 
                 case "3":
-                case "EDIT":
-                case "EDIT EVENT": {
-                    System.out.println(SWITCH_MENU);
+                case "EDIT EVENT":
+                case "EDIT": {
                     editEvent();
                     break;
                 }
 
                 case "4":
-                case "EX":
-                case "EXIT": {
+                case "SAVE EVENTS TO FILE":
+                case "SAVE TO FILE":
+                case "SAVE EVENTS":
+                case "SAVE FILE":
+                case "SAVE":
+                case "SF": {
+                    CsvFileWriter.writeCsvFile();
                     System.out.println(SWITCH_MENU);
+                    break;
+                }
+
+                case "5":
+                case "READ EVENTS FROM FILE":
+                case "READ FROM FILE":
+                case "READ EVENTS":
+                case "READ FILE":
+                case "READ":
+                case "RF": {
+                    CsvFileReader.readCsvFile();
+                    System.out.println(SWITCH_MENU);
+                    break;
+                }
+
+                case "6":
+                case "EXIT":
+                case "EX": {
                     System.exit(0);
                     break;
                 }
@@ -62,11 +99,11 @@ class EventManager {
     private void showEvents() {
         String option;
         do {
-            System.out.println("What do you want to see?\n");
-            System.out.println("1. ALL EVENTS");
-            System.out.println("2. EVENTS FOR CERTAIN DAY");
-            System.out.println("3. EVENTS FOR PERIOD");
-            System.out.println("4. BACK\n");
+            System.out.println("What do you want to see?\n" +
+                    "1. ALL EVENTS\n" +
+                    "2. EVENTS FOR CERTAIN DAY\n" +
+                    "3. EVENTS FOR PERIOD\n" +
+                    "4. BACK\n\n");
 
             option = sc.nextLine().toUpperCase();
             if (option.isEmpty()) option = sc.nextLine().toUpperCase();
@@ -111,9 +148,10 @@ class EventManager {
         boolean isCompeted = false;
         String option;
         do {
-            System.out.println("What type of events you want to add?\n");
-            System.out.println("1. ADD ORDINARY EVENT");
-            System.out.println("2. ADD AN EVENT FOR A PERIOD");
+            System.out.println("What type of events you want to add?\n" +
+                    "1. ADD ORDINARY EVENT\n" +
+                    "2. ADD AN EVENT FOR A PERIOD\n" +
+                    "3. BACK\n\n");
             option = sc.nextLine().toUpperCase();
             if (option.isEmpty()) option = sc.nextLine().toUpperCase();
 
@@ -137,13 +175,19 @@ class EventManager {
                     addEvent(false);
                     break;
                 }
-                default: continue;
+                case "BACK":
+                case "B":
+                case "3": {
+                    isCompeted = true;
+                }
+                default:
+                    continue;
             }
 
             do {
-                System.out.println("\n\nChoose one of the following options:\n");
-                System.out.println("1. ADD ONE MORE EVENT");
-                System.out.println("2. BACK");
+                System.out.println("\n\nChoose one of the following options:\n" +
+                        "1. ADD ONE MORE EVENT\n" +
+                        "2. BACK\n");
                 option = sc.nextLine().toUpperCase();
 
                 if (option.equals("1") || option.equals("ADD ONE MORE EVENT") || option.equals("ADD EVENT") ||
@@ -151,10 +195,10 @@ class EventManager {
                     System.out.println();
                     System.out.println(SWITCH_MENU);
                     break;
-                } else if ((option.equals("2") || option.equals("BACK") || option.equals("B"))) {
+                } else {
                     isCompeted = true;
                 }
-            } while (!isCompeted);
+            } while (!(option.equals("2") || option.equals("BACK") || option.equals("B")));
         } while (!isCompeted);
         System.out.println(SWITCH_MENU);
     }
@@ -168,12 +212,12 @@ class EventManager {
         do {
             System.out.println(EventList.getEvent(id));
             System.out.println();
-            System.out.println("What do you want to change\n");
-            System.out.println("1. TITLE");
-            System.out.println("2. DESCRIPTION");
-            System.out.println("3. DATE");
-            System.out.println("4. ALL");
-            System.out.println("5. BACK\n");
+            System.out.println("What do you want to change\n" +
+                    "1. TITLE\n" +
+                    "2. DESCRIPTION\n" +
+                    "3. DATE\n" +
+                    "4. ALL\n" +
+                    "5. BACK\n\n");
 
             option = sc.nextLine().toUpperCase();
             if (option.isEmpty()) option = sc.nextLine().toUpperCase();
@@ -231,7 +275,7 @@ class EventManager {
         if (events.isEmpty()) {
             System.out.println("There are no events");
         } else {
-            System.out.printf("%7s %40s %50s %30s", "id", "Title", "Description", "Date");
+            System.out.printf("%7s %40s %50s %45s", "id", "Title", "Description", "Date");
             System.out.println();
             System.out.println(events);
         }
@@ -239,8 +283,8 @@ class EventManager {
 
         String option;
         do {
-            System.out.println("Choose one of the following options:\n");
-            System.out.println("1. BACK");
+            System.out.println("Choose one of the following options:\n" +
+                    "1. BACK\n");
 
             option = sc.next().toUpperCase();
         } while (!(option.equals("1") || option.equals("BACK") || option.equals("B")));
@@ -276,8 +320,8 @@ class EventManager {
             if (start.before(finish) || start.equals(finish)) {
                 isRightDates = true;
             } else {
-                System.out.println("The end date can't be earlier than the event start date.");
-                System.out.println("Please enter right dates!\n");
+                System.out.println("The end date can't be earlier than the event start date.\n" +
+                        "Please enter right dates!\n\n");
             }
         }
 
