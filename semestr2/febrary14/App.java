@@ -1,7 +1,7 @@
 package febrary14;
 
-import febrary14.audioHandler.MP3;
-import febrary14.audioHandler.Player;
+import febrary14.audio.processing.MP3;
+import febrary14.audio.processing.Player;
 import febrary14.data.MusicStorage;
 import febrary14.ui.ConsoleUserInteractor;
 import febrary14.ui.UserInteractor;
