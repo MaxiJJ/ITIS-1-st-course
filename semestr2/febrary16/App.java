@@ -1,6 +1,5 @@
 package febrary16;
 
-import febrary16.audio.processing.Player;
 import febrary16.audio.processing.PlayerManager;
 import febrary16.data.MusicStorage;
 import febrary16.ui.ConsoleUserInteractor;
@@ -15,9 +14,9 @@ import java.net.URISyntaxException;
  * Created by Максим on 14.02.2017.
  */
 public class App extends Application {
-    MusicStorage musicStorage;
-    UserInteractor userInteractor;
-    PlayerManager playerManager;
+    private MusicStorage musicStorage;
+    private UserInteractor userInteractor;
+    private PlayerManager playerManager;
 
     public App(String[] args) {
         super(args);
@@ -51,7 +50,7 @@ public class App extends Application {
                     case ("play"):
                         if (!playerManager.isTrackPicked()) {
                             int trackNum = userInteractor.readTrackNumber();
-                            playerManager.pickTrack(musicStorage.scan().get(trackNum - 1));
+                            playerManager.pickTrack(musicStorage.get(trackNum));
                         }
                         playerManager.play();
                         break;
@@ -61,13 +60,33 @@ public class App extends Application {
                     case ("stop"):
                         playerManager.stop();
                         break;
-                    case ("sort"):
-                        musicStorage.sort();
+                    case ("add"):
+                        userInteractor.print("Enter the path to track: ");
+                        File path = new File(userInteractor.readCommand());
+                        musicStorage.add(path.toURI());
                         break;
-                    case ("search"):
+                    case ("delete"):
+                        int trackNum = userInteractor.readTrackNumber();
+                        musicStorage.delete(musicStorage.get(trackNum));
+                        break;
+                    case ("sortByTitle"):
+                        musicStorage.sortByTitle();
+                        break;
+                    case ("sortByDuration"):
+                        musicStorage.sortByDuration();
+                        break;
+                    case ("sortByComposer"):
+                        musicStorage.sortByComposer();
+                        break;
+                    case ("searchByName"):
                         userInteractor.print("Enter the keyword: ");
                         String keyword = userInteractor.readCommand();
-                        userInteractor.print(musicStorage.search(keyword).getTitle());
+                        userInteractor.print(musicStorage.searchByName(keyword).getTitle());
+                        break;
+                    case ("searchByComposer"):
+                        userInteractor.print("Enter the keyword: ");
+                        String composerName = userInteractor.readCommand();
+                        userInteractor.print(musicStorage.searchByComposer(composerName).getTitle());
                         break;
                     case ("create playlist"):
                         musicStorage.createPlaylist();
@@ -92,7 +111,8 @@ public class App extends Application {
     private void changeDirectory() throws UserInteractorReadException, URISyntaxException {
         userInteractor.print("Enter the path to music directory: ");
         File path = new File(userInteractor.readCommand());
-        musicStorage.changeStoragePath(path.toURI());
+        musicStorage.clear();
+        musicStorage.add(path.toURI());
     }
 
 

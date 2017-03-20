@@ -5,7 +5,7 @@ import java.util.Calendar;
 /**
  * Created by Максим on 14.02.2017.
  */
-public class Composer {
+public class Composer implements Comparable<Composer> {
     private String name;
     private Calendar birth;
 
@@ -23,5 +23,10 @@ public class Composer {
 
     public void setBirth(Calendar birth) {
         this.birth = birth;
+    }
+
+    @Override
+    public int compareTo(Composer o) {
+        return name.compareToIgnoreCase(o.name);
     }
 }

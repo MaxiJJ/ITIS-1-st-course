@@ -1,6 +1,9 @@
 package febrary16.data;
 
 import febrary16.entities.Track;
+import febrary16.entities.TrackComposerComparator;
+import febrary16.entities.TrackDurationComparator;
+import febrary16.entities.TrackTitleComparator;
 
 import java.io.File;
 import java.net.URI;
@@ -9,66 +12,77 @@ import java.util.*;
 public class MusicStorage {
     private List<Track> trackList;
     private DataStorage dataStorage;
-    private URI uri;
 
     public MusicStorage() {
-            trackList = new ArrayList<>();
-            dataStorage = new InternalDataStorage();
+        trackList = new ArrayList<>();
+        dataStorage = new InternalDataStorage();
     }
 
-    public boolean add(Track track) {
-        return trackList.add(track);
+    public boolean add(URI uri) {
+        return dataStorage.add(uri);
     }
 
-    public List<Track> scan() {
-        Set<File> trackFiles = dataStorage.scan(uri);
+    public Track get(int index) {
+        return trackList.get(index - 1);
+    }
+
+    public boolean delete(Track track) {
+        return dataStorage.remove(track.getUri());
+    }
+
+    public void clear() {
         trackList.clear();
+        dataStorage.clear();
+    }
 
-//        Iterator<File> iterator = trackFiles.iterator();
-//
-//        while (iterator.hasNext()) {
-//            File file = iterator.next();
-//
-//            Track track = new Track();
-//
-//            String[] fileData = file.getName().split("[.]");
-//            track.setTitle(fileData[0]);
-//            track.setFormat(fileData[1]);
-//
-//            add(track);
-//        }
+    private List<Track> handleFiles() {
+        Set<File> trackFiles = dataStorage.getFileSet();
 
+        List<Track> trackList = new ArrayList<>();
         for (File file : trackFiles) {
             Track track = new Track();
 
             String[] fileData = file.getName().split("[.]");
             track.setTitle(fileData[0]);
             track.setFormat(fileData[1]);
+            track.setUri(file.toURI());
 
-            add(track);
+            trackList.add(track);
         }
 
-        return trackList;
+        if (!trackList.equals(this.trackList)) this.trackList = trackList;
+
+        return this.trackList;
     }
 
-    public void sort() {
-        trackList.sort(new Comparator<Track>() {
-            @Override
-            public int compare(Track track1, Track track2) {
-                return track1.getTitle().compareToIgnoreCase(track2.getTitle());
-            }
-        });
+    public void sortByTitle() {
+        trackList.sort(new TrackTitleComparator());
     }
 
-    public Track search(String name) {
+    public void sortByDuration() {
+        trackList.sort(new TrackDurationComparator());
+    }
+
+    public void sortByComposer() {
+        trackList.sort(new TrackComposerComparator());
+    }
+
+    public Track searchByName(String title) {
         for (Track track : trackList) {
-            if (track.getTitle().contains(name)) return track;
+            if (track.getTitle().contains(title)) return track;
         }
-        throw new NoSuchElementException("Can't find track with title:" + name);
+        throw new NoSuchElementException("Can't find track with title: " + title);
+    }
+
+    public Track searchByComposer(String name) {
+        for (Track track : trackList) {
+            if (track.getComposer().getName().contains(name)) return track;
+        }
+        throw new NoSuchElementException("Can't find track with composer name: " + name);
     }
 
     public void createPlaylist() {
-        scan();
+        handleFiles();
         int trackNum = 1;
 
         for (Track track : trackList) {
@@ -77,9 +91,7 @@ public class MusicStorage {
         }
     }
 
-    public void changeStoragePath(URI path) {
-        dataStorage.remove(uri);
-        uri = path;
+    public List<Track> getTrackList() {
+        return handleFiles();
     }
-
 }
