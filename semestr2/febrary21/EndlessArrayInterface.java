@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package febrary21;
 
 /**
@@ -24,4 +23,3 @@ public interface EndlessArrayInterface<T> {
 
     T get(int index);
 }
->>>>>>> origin/master

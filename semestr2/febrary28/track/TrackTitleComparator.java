@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package febrary28.track;
 
 import java.util.Comparator;
@@ -26,4 +25,3 @@ public class TrackTitleComparator implements Comparator<Track> {
         return o1.getTitle().compareToIgnoreCase(o2.getTitle());
     }
 }
->>>>>>> origin/master
