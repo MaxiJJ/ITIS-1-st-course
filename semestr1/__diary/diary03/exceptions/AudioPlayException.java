@@ -1,0 +1,15 @@
+package course1.__diary.diary03.exceptions;
+
+public class AudioPlayException extends Exception {
+    public AudioPlayException(String message) {
+        super(message);
+    }
+
+    public AudioPlayException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public AudioPlayException(Throwable cause) {
+        super(cause);
+    }
+}
