@@ -1,4 +1,4 @@
-package febrary9.utils;
+package course1.febrary9.utils;
 
 /**
  * Created by Максим on 09.02.2017.

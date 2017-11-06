@@ -1,4 +1,4 @@
-package febrary9.data;
+package course1.febrary9.data;
 
 /**
  * Created by Максим on 09.02.2017.

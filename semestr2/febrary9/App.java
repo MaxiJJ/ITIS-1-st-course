@@ -1,12 +1,14 @@
-package febrary9;
+package course1.febrary9;
 
-import febrary9.data.Db;
-import febrary9.data.DbException;
-import febrary9.data.FileDb;
-import febrary9.data.MemoryStorage;
-import febrary9.utils.*;
+import course1.febrary16.ui.UserInteractorReadException;
+import course1.febrary9.data.Db;
+import course1.febrary9.data.DbException;
+import course1.febrary9.data.MemoryStorage;
+import course1.febrary9.utils.ConsoleUserInteractor;
+import course1.febrary9.utils.UserInteractor;
+import course1.febrary9.utils.UserInteractorException;
+import course1.febrary9.utils.UserInteractorWriteException;
 
-import java.nio.file.Paths;
 import java.util.Arrays;
 
 /**
@@ -55,7 +57,7 @@ public class App extends Application {
                         }
                         break;
                     default:
-                        this.terminal.print("Unkown command");
+                        this.terminal.print("Unknown command");
                 }
 //        this.terminal.print(command);
             }

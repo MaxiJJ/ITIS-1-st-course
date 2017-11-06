@@ -1,4 +1,6 @@
-package febrary9.utils;
+package course1.febrary9.utils;
+
+import course1.febrary16.ui.UserInteractorReadException;
 
 import java.util.Scanner;
 
