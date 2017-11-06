@@ -1,4 +1,4 @@
-package march21.courses;
+package course1.march21.courses;
 
 /**
  * Created by Максим on 21.03.2017.

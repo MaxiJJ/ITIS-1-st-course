@@ -1,7 +1,7 @@
-package march21.student;
+package course1.march21.student;
 
-import march21.Group;
-import march21.courses.Course;
+import course1.march21.Group;
+import course1.march21.courses.Course;
 
 import java.util.List;
 
@@ -80,5 +80,31 @@ public class Student {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Student student = (Student) o;
+
+        if (sessionPassed != student.sessionPassed) return false;
+        if (firstName != null ? !firstName.equals(student.firstName) : student.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(student.lastName) : student.lastName != null) return false;
+        if (courses != null ? !courses.equals(student.courses) : student.courses != null) return false;
+        if (sumScore != null ? !sumScore.equals(student.sumScore) : student.sumScore != null) return false;
+        return group != null ? group.equals(student.group) : student.group == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName != null ? firstName.hashCode() : 0;
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (courses != null ? courses.hashCode() : 0);
+        result = 31 * result + (sumScore != null ? sumScore.hashCode() : 0);
+        result = 31 * result + (sessionPassed ? 1 : 0);
+        result = 31 * result + (group != null ? group.hashCode() : 0);
+        return result;
     }
 }

@@ -1,7 +1,7 @@
-package march21;
+package course1.march21;
 
-import march21.courses.Course;
-import march21.student.Student;
+import course1.march21.courses.Course;
+import course1.march21.student.Student;
 
 import java.util.ArrayList;
 import java.util.List;
